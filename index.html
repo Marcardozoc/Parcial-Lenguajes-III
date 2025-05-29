@@ -1,0 +1,107 @@
+<head>
+    <meta charset="UTF-8"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div> Ingrese para los siguientes inputs, los corepondientes apartados para poder iniciar las preguntas</div>
+    <div> ingrese apellido </div>
+    <input type="text" id="Apellido"> Apellido
+
+    <div> ingrese nombre </div>
+    <input type="text"  id=" Nombre"> Nombre
+
+    <div> ingrese DNI </div>
+    <input type="number"  id="DNI"> DNI
+
+    <div> ingrese nacimiento </div>
+    <input type="date" id="Nacimiento"> Nacimiento 
+
+    <div> ingrese su email </div>
+    <input type="email" id="Mail"> Mail
+
+    <div></div>
+
+    <button onclick="MandarFormulario()"> Mandar Formulario e iniciar preguntas </button>
+
+    <div id="contenedor"> Aqui se mostraran abajo las preguntas progresivamente</div>
+
+    <div id="ResultadoFinal">   </div>
+
+    <script>
+        let Persona= []
+        function MandarFormulario(){
+            let valorApellido= document.getElementById("Apellido").value
+            let valorNombre= document.getElementById("Nombre").value
+            let valorDNI= document.getElementById("DNI").value
+            let valorNacimiento= document.getElementById("Nacimiento").value
+            let valorEMAIL= document.getElementById("Mail").value   
+
+            //validaciones
+
+            if (valorApellido.trim()==""|| isNaN(valorApellido) == true){
+                alert("ingrese apellido valido")
+                return
+            }
+            if (valorNombre.trim()==""|| isNaN(valorNombre)== true){
+                alert("ingrese Nombre valido")
+                return
+            }
+            if (valorDNI.trim()==""|| valorDNI.length()==8){
+                alert("ingrese DNI valido")
+                return
+            }
+            if (valorNacimiento.trim()=""){
+                alert("ingrese Nacimiento valido")
+                return
+            }
+            if (valorEMAIL.trim()=""){
+                alert("ingrese EMAIL valido")
+                return
+            }
+
+            //final de las validaciones y carga de persona y ejecutar preguntas
+
+            let nuevaPersona= {"apellido": valorApellido, "nombre": valorNombre, "DNI": valorDNI, "nacimiento": valorNacimiento, "EMAIL": valorEMAIL} 
+            Persona.push(nuevaPersona)
+            EjecutarPreguntas()
+        }
+
+        
+        let  carruselPreguntas=[{"pregunta": "Cual es tu color Nacionalidad?", "pregunta2": "Cual es tu color favorito",
+            "pregunta3": "como se llama tu mascota"}]
+
+        function EjecutarPreguntas(){
+            let contenedorHTML= document.getElementById("contenedor")
+            contenedorHTML.innerHTML= ""
+            let PreguntasHTML = carruselPreguntas.map((pregunta)=>{
+                return
+                `
+                <div>
+                <p> ${pregunta.pregunta1}</p>
+                <input type="text" , id=" pregunta1"> pregunta1
+
+                <p> ${pregunta.pregunta2}</p>
+                <input type="text" , id=" pregunta2"> pregunta1
+
+                <p> ${pregunta.pregunta3}</p>
+                <input type="text" , id=" pregunta3"> pregunta1
+
+                <p> Finalizar Cuestionario cuando acabes de responder </p>
+                <button onclick="Finalizar()"> Mandar respuesta </button>
+                </div>
+                `
+            })
+            contenedorHTML.innerHTML = PreguntasHTML.join("")
+        }
+        function Finalizar(){
+            let valorP1= document.getElementById("pregunta1").value
+            let valorP2=document.getElementById("pregunta2").value
+            let valorP3=document.getElementById("pregunta3").value
+            
+            let DivFinal= document.getElementById("ResultadoFinal")
+            DivFinal.innerHTML= (valorP1+ "  /  " + valorP2 + "  /  " +valorP3)
+
+        }
+
+    </script>
+</body>
